@@ -1,0 +1,19 @@
+import asyncio
+import websockets
+
+async def handler(websocket):
+    print("Unity connected")
+
+    while True:
+        await asyncio.sleep(2)
+        await websocket.send("ANGLE:45")
+
+        await asyncio.sleep(2)
+        await websocket.send("SHOOT")
+
+async def main():
+    async with websockets.serve(handler, "localhost", 8765):
+        print("Server running...")
+        await asyncio.Future()
+
+asyncio.run(main())
